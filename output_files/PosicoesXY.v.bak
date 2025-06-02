@@ -1,0 +1,44 @@
+module PosicoesXY(A, B, C, D, E, F, Y);
+	input A, B, C, D, E, F;
+	output [9:0] Y;
+	
+	// NEGADOS
+	wire nA, nB, nC, nD, nE, nF;
+	not (nA, A);
+	not (nB, B);
+	not (nC, C);
+	not (nD, D);
+	not (nE, E);	
+	not (nF, F);
+	
+	// y0
+	and (Y[0], nA, A);
+	
+	// y1
+	and (Y[1], nA, A);
+	
+	// y2
+	or (Y[2], nA, A);
+	
+	//y3
+	or (Y[3], nB, B);
+	
+	//y4
+	or (Y[4], nC, C);
+	
+	//y5
+	or (Y[5], nD, D);
+	
+	//y6
+	or (Y[6], nE, E);
+	
+	//y7
+	or (Y[7], nF, F);
+	
+	//y8
+	and (Y[8], nA, A);
+	
+	//y9
+	and (Y[9], nA, A);
+
+endmodule

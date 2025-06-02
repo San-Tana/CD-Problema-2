@@ -1,0 +1,41 @@
+module vga_sync_estrutural (
+    input [9:0] x,
+    input [9:0] y,
+    output wire hsync,
+    output wire vsync,
+    output wire video_on
+);
+   
+	
+	// Sinais de sincronismo
+	// Sinais de sincronismo
+	// Sinais de sincronismo
+ 
+	 // hsync x >= 656 and x < 752
+	 
+	 wire hsync_dentro;
+	 entre_intervalo_10bit hsyncEntre(.x(x), .inicio(10'd656), .fim(10'd752), .dentro(hsync_dentro));
+	 not (hsync, hsync_dentro);
+    
+	 
+
+    // vsync y >= 490 and y < 492
+	 wire vsync_dentro;
+	 entre_intervalo_10bit vsyncEntre(.x(y), .inicio(10'd490), .fim(10'd492), .dentro(vsync_dentro));
+	 not (vsync, vsync_dentro);
+	
+	 // Ativo apenas dentro da área visível da tela
+	 
+
+	 
+	 wire x_dentro, y_dentro;
+	 menor_10bit xmenor(.a(x), .b(10'd640), .menor(x_dentro));
+	 menor_10bit ymenor(.a(y), .b(10'd480), .menor(y_dentro));
+	 and (video_on,x_dentro,y_dentro);
+	
+	// Sinais de sincronismo
+	// Sinais de sincronismo
+	// Sinais de sincronismo
+	 
+endmodule
+

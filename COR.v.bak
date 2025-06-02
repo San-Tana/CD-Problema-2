@@ -1,0 +1,114 @@
+module COR(A, B, C, D, red[3:0], green[3:0], blue[3:0])
+	
+	input A, B, C, D;
+	output red[3:0], green[3:0], blue[3:0];
+	
+	// NEGADOS
+	wire nA, nB, nC, nD;
+	not notA (nA, A);
+	not notB (nB, B);
+	not notC (nC, C);
+	not notD (nD, D);
+	
+	// VERMELHO 0
+	wire f1, f2, f3, f4, f5
+	and andr00(f1, A, C);
+	and andr01(f2, nB, nC, nD);
+	and andr02(f3, nB, C, D);
+	and andr03(f4, nA, B, nC);
+	and andr04(f5, nA, B, nD);
+	or orr0(red[0], f1, f2, f3, f4, f5);
+	
+	// VERMELHO 1
+	wire f6, f7, f8, f9, f10;
+	and andr10(f6, C, D);
+	and andr11(f7, B, D);
+	and andr12(f8, A, D);
+	and andr13(f9, A, B ,C);
+	and andr14(f10, nA, nB, nC, nD);
+	or orr1(red[1], f6, f7, f8, f9, f10);
+	
+	// VERMELHO 2
+	wire f11, f12, f13, f14, f15;
+	and andr20(f11, B, nD);
+	and andr21(f12, nA, nC, nD);
+	and andr22(f13, nB, C, D);
+	and andr23(f14, nA, B, nC);
+	and andr24(f15, A, C, D);
+	orr2(red[2], f11, f12, f13, f14, f15);
+	
+	// VERMELHO 3
+	wire f16, f17, f18, f19;
+	and andr30(f16, A, nD);
+	and andr30(f17, nB, nC, nD);
+	and andr30(f18, B, nC, D);
+	and andr30(f19, nA, nB, C, D);
+	orr3(red[3],f16, f17, f18, f19);
+	
+	
+	// VERDE O
+	wire f20, f21, f22, f23;
+	and andg00(f20, nA, D);
+	and andg01(f21, C, D);
+	and andg02(f22, A, B, C);
+	and andg03(f23, A, nB, nC, nD);
+	or org0(green[0], f20, f21, f22, f23);
+	
+	// VERDE 1
+	wire f24, f25, f26, f27;
+	and andg10(f24, A, nD);
+	and andg11(f25, nA, nB, D);
+	and andg12(f26, nB, C, D);
+	and andg13(f27, B, Cn, D);
+	or org1(green[1], f24, f25, f26, f27);
+	
+	// VERDE 2
+	wire f28, f29, f30, f31;
+	and andg20(f28, nA, nB, D);
+	and andg21(f29, nB, C, D);
+	and andg22(f30, nA, B, nC);
+	and andg23(f31, A, C, nD);
+	or org2(green[2], f28, f29, f30, f31);
+	
+	// VERDE 3
+	wire f32, f33, f34, f35, f36, f37;
+	and andg30(f32, nA, nB, D);
+	and andg31(f33, nB, C, D);
+	and andg32(f34, A, B, D);
+	and andg33(f35, A, B, C);
+	and andg34(f36, nA, B, nC, nD);
+	and andg35(f37, A, nB, nC, nD);
+	or org3(green[3], f32, f33, f34, f35, f36, f37);
+	
+	
+	// AZUL 0
+	wire f38, f39, f40, f41, f42;
+	and andb00(f38, B, C, D);
+	and andb01(f39, A, nB, nC);
+	and andb02(f40, A, B, C);
+	and andb03(f41, nA, nB, C, nD);
+	and andb04(f42, nA, B, nC, nD);
+	or orb0(blue[0], f38, f39, f40, f41, f42);
+	
+	// AZUL 1
+	wire f43, f44;
+	and andb10(f43, C, nD);
+	and andb11(f44, A, nB);
+	or orb1(blue[1], f43, f44);
+	
+	// AZUL 2
+	wire f45, f46, f47, f48;
+	and andb20(f45, B, nD);
+	and andb21(f46, A, nC);
+	and andb22(f47, nA, C, nD);
+	and andb23(f48, nA, B, C);
+	or orb2(blue[2], f45, f46, f47, f48);
+	
+	// AZUL 3
+	wire f49, f50, f51;
+	and andb30(f49, A, nB, D);
+	and andb31(f50, nA, nB, nD);
+	and andb32(f51, A, B, nC, nD);
+	or orb3(blue[3], f49, f50, f51);
+
+endmodule

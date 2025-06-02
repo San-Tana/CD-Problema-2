@@ -1,0 +1,86 @@
+module tamanho_quadrado(A, B, C, D, E, F, Y);
+	input A, B, C, D, E, F;
+	output [9:0] Y;
+	
+	//Negado
+	wire nA, nB, nC, nD, nE, nF;
+	not not0(nA, A);
+	not not1(nB, B);
+	not not2(nC, C);
+	not not3(nD, D);
+	not not4(nE, E);
+	not not5(nF, F);
+	
+	//y0
+	and ory0(Y[0], 1'b0, 1'b0);
+	
+	//y1
+	and ory1(Y[1], 1'b0, 1'b0);
+	
+	//y2
+	wire f1, f2;
+	and andy20(f1, A, C);
+	and andy21(f2, A, B);
+	or ory2(Y[2], f1, f2);
+	
+	//y3
+	wire f3, f4, f5, f6, f7, f8;
+	and andy30(f3, nA, B, D);
+	and andy31(f4, nA, B, C);
+	and andy32(f5, A, nB, nC);
+	and andy33(f6, nA, B, E, F);
+	and andy34(f7, B, C, D, F);
+	and andy35(f8, B, C, D, E);
+	or ory3(Y[3], f3, f4, f5, f6, f7, f8);
+	
+	//y4
+	wire f9, f10, f11, f12, f13, f14, f15, f16, f17, f18;
+	and andy40(f9, nA, nB, C);
+	and andy41(f10, A, nB, nC);
+	and andy42(f11, A, nC, D);
+	and andy43(f12, nA, C, D, F);
+	and andy44(f13, nA, C, D, E);
+	and andy45(f14, A, nC, E, F);
+	and andy46(f15, A, B, C, nD);
+	and andy47(f16, nA, B, nC, nD, nE);
+	and andy48(f17, nA, B, nC, nD, nF);
+	and andy49(f18, A, B, D, nE, nF);
+	or ory4(Y[4], f9, f10, f11, f12, f13, f14, f15, f16, f17, f18);
+	
+	//y5
+	wire f19, f20, f21, f22, f23, f24, f25, f27;
+	and andy50(f19, nB, nC, D);
+	and andy51(f20, nB, D, F);
+	and andy52(f21, nB, D, E);
+	and andy53(f22, B, nD, nE);
+	and andy54(f23, B, nD, nF);
+	and andy55(f24, B, C, nD);
+	and andy56(f25, nB, nC, E, F);
+	and andy57(f27, B, C, nE, nF);
+	or ory5(Y[5], f19, f20,f21, f22, f23, f24, f25, f27);
+	
+	//y6
+	wire f28, f29, f30, f31, f32;
+	and andy60(f28, nC, nD, nE);
+	and andy61(f29, nC, E, nF);
+	and andy62(f30, nC, D, F);
+	and andy63(f31, C, nD, E, F);
+	and andy64(f32, C, D, nE, nF);
+	or ory6(Y[6], f28, f29, f30, f31, f32);
+	
+	//y7
+	wire f33, f34, f35, f36;
+	and andy70(f33, nD, nE, F);
+	and andy71(f34, nD, E, nF);
+	and andy72(f35, D, nE, nF);
+	and andy73(f36, D, E, F);
+	or ory7(Y[7], f33, f34, f35, f36);
+	
+	//y8
+	or bufy8(Y[8], 1'b0, E);
+	
+	//y9
+	not noty9(Y[9], F);
+	
+endmodule
+	

@@ -1,0 +1,52 @@
+module quadrado_colorido_structural(
+    input [9:0] x, y,
+    input A, B, C, D,
+    output [3:0] red, green, blue
+);
+
+// Declarações
+wire dentro_x, dentro_y, dentro_quadrado;
+wire [3:0] red_interno, green_interno, blue_interno;
+
+// Instancia a cor com base nos switches
+COR cor_inst (
+    .A(A), .B(B), .C(C), .D(D),
+    .red(red_interno),
+    .green(green_interno),
+    .blue(blue_interno)
+);
+
+// Verifica se x está entre 100 e 299
+// 100 = 0001100100 (binário), 299 = 100101011 (binário)
+wire x_maior_igual_100, x_menor_300;
+maior_ou_igual_10bit maior100 (.a(x), .b(10'd100), .maior_igual(x_maior_igual_100));
+menor_10bit menor300 (.a(x), .b(10'd300), .menor(x_menor_300));
+and (dentro_x, x_maior_igual_100, x_menor_300);
+
+// Verifica se y está entre 100 e 299
+wire y_maior_igual_100, y_menor_300;
+maior_ou_igual_10bit maior100y (.a(y), .b(10'd100), .maior_igual(y_maior_igual_100));
+menor_10bit menor300y (.a(y), .b(10'd300), .menor(y_menor_300));
+and (dentro_y, y_maior_igual_100, y_menor_300);
+
+// Ativa somente se estiver dentro do quadrado
+and (dentro_quadrado, dentro_x, dentro_y);
+
+// Gera RGB somente se estiver dentro do quadrado
+and and_red0(red[0], red_interno[0], dentro_quadrado);
+and and_red1(red[1], red_interno[1], dentro_quadrado);
+and and_red2(red[2], red_interno[2], dentro_quadrado);
+and and_red3(red[3], red_interno[3], dentro_quadrado);
+
+and and_green0(green[0], green_interno[0], dentro_quadrado);
+and and_green1(green[1], green_interno[1], dentro_quadrado);
+and and_green2(green[2], green_interno[2], dentro_quadrado);
+and and_green3(green[3], green_interno[3], dentro_quadrado);
+
+and and_blue0(blue[0], blue_interno[0], dentro_quadrado);
+and and_blue1(blue[1], blue_interno[1], dentro_quadrado);
+and and_blue2(blue[2], blue_interno[2], dentro_quadrado);
+and and_blue3(blue[3], blue_interno[3], dentro_quadrado);
+
+endmodule
+

@@ -1,0 +1,19 @@
+module vga_sync_structural(input [9:0] x, y, output video_on, hsync, vsync);
+
+    // video_on: x < 640 && y < 480
+    wire x_menor_640, y_menor_480;
+    menor_10bit comp_x(.a(x), .b(10'd640), .saida(x_menor_640));
+    menor_10bit comp_y(.a(y), .b(10'd480), .saida(y_menor_480));
+    and(video_on, x_menor_640, y_menor_480);
+
+    // hsync: ativo baixo quando x está entre 656 e 751
+    wire dentro_hsync;
+    entre_intervalo_10bit hsync_check(.valor(x), .min(10'd656), .max(10'd751), .dentro(dentro_hsync));
+    not(hsync, dentro_hsync); // sinal ativo baixo
+
+    // vsync: ativo baixo quando y está entre 490 e 491
+    wire dentro_vsync;
+    entre_intervalo_10bit vsync_check(.valor(y), .min(10'd490), .max(10'd491), .dentro(dentro_vsync));
+    not(vsync, dentro_vsync); // sinal ativo baixo
+
+endmodule
